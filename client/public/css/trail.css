@@ -1,0 +1,30 @@
+body {
+
+}
+
+/* img{
+width: 50%
+
+} */
+
+h1{
+  text-align: center;
+  font-family: "Verdana", Verdana, sans-serif;
+  color: black
+
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+p{
+  text-align: center;
+  font-family: "Verdana", Verdana, sans-serif;
+  color: red
+
+
+}
