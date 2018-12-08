@@ -25,9 +25,7 @@ app.get('/game', function (req, res) { res.sendFile('game.html', {root: '../clie
 
 var topTen2Controller = require('./controllers/topTen2Controller');
 var setupController = require('./controllers/setupController');
-
-console.log(topTen2Controller)
-console.log(setupController)
+var gameController = require('./controllers/gameController');
 
 app.route('/api/topTen2')
   .get(topTen2Controller.getCurrentScores)
@@ -39,13 +37,10 @@ app.route('/api/topTen2/:topTenId')
 
 // game controlller for PACE
 
-var gameController = require('./controllers/gameController');
 
-app.route('/api/pace/pace')
+app.route('/api/pace/:paceid?')
   .get(gameController.getCurrentPaces)
-
-  app.route('/api/pace/changePace')
-    .get(gameController.changePace)
+  .post(gameController.setPace)
 
 
 
@@ -54,14 +49,12 @@ app.route('/api/pace/pace')
 
 // game controlller for WEATHER
 
-var gameController = require('./controllers/gameController');
+
 
 app.route('/api/weather/weather')
   .get(gameController.getCurrentWeathers);
 
 //  game controlller for TERRAIN:
-
-  var gameController = require('./controllers/gameController');
 
 app.route('/api/terrain/terrain')
   .get(gameController.getCurrentTerrains);
@@ -72,16 +65,37 @@ app.route('/api/terrain/terrain')
   app.route('/api/game/getGameData')
     .get(gameController.getGameData);
 
+  app.route('/api/game/data')
+    .get(gameController.getGameData);
 
-    app.route('/api/game/updateGame')
-      .get(gameController.updateGame);
 
-  app.route('/api/setup/player')
-    .get(setupController.getPlayerNames);
-    //.post(setupController.savePlayerNames);
+  app.route('/api/game/updateGame')
+    .get(gameController.updateGameData);
 
   app.route('/api/game/reset')
     .get(gameController.resetGame);
+
+// setup screens
+
+  app.route('/api/setup/wagonLeader/:name1')
+    .post(gameController.setLeader);
+
+  app.route('/api/setup/member/:name2/:name3/:name4/:name5')
+    .post(gameController.setMembers);
+
+  app.route('/api/setup/profession/:profession')
+    .post(gameController.pickProfession);
+
+  app.route('/api/setup/month/:month')
+    .post(gameController.setMonth);
+
+
+
+
+// get screens
+
+  app.route('/api/setup/screen/:id')
+    .get(setupController.getGameScreen);
 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

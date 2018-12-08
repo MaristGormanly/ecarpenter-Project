@@ -5,7 +5,12 @@ function gamePace(Name, Health, Mileage) {
   this.paceMileage = Mileage;     // = new date (inDate); makes sure when it passes the peramitor of the dates it comes out a date not a string
 }
 
-exports.paceOptions = function (Name, Health, Mileage) {
-  var pace = new gamePace(Name, Health, Mileage);
-  return pace;
+var allPaces = []; // the array that contains top ten scores at that time
+allPaces.push(new gamePace("Steady", 0, 20));
+allPaces.push(new gamePace("Strenuous", -3, 30));
+allPaces.push(new gamePace("Grueling", -8, 35));
+allPaces.push(new gamePace("Resting", +5, 0));
+
+exports.paceOptions = function () {
+  return (allPaces);
 }

@@ -4,49 +4,45 @@ var pace = require('../models/pace');
 var weather = require('../models/weather');
 var terrain = require('../models/terrain');
 var gameData = require('../models/gameData');
-var gameStats = gameData.gameInfo();
+var gameStats = gameData.gameInfo({}, {}, {}, " ");
 //var gameChange = setup.createGameObject();
 
 // PACE
 
-var currentPace = []; // the array that contains top ten scores at that time
-currentPace1 = pace.paceOptions("Steady", 0, 20);
-currentPace2 = pace.paceOptions("Strenuous", -3, 30);
-currentPace3 = pace.paceOptions("Grueling", -8, 35);
-currentPace4 = pace.paceOptions("Resting", +5, 0);
 
-currentPace.push(currentPace1);
-currentPace.push(currentPace2);
-currentPace.push(currentPace3);
-currentPace.push(currentPace4);
+
+
 
 // GET PACE
 
 exports.getCurrentPaces = function(req, res) {
     res.setHeader('Content-Type', 'application/json');
-    res.send(exports.currentPace);
+    res.send(gameStats.currentPace);
   }
 
-  exports.changePace = function(req,res){
-    gameData.gameStats.currentPace[req.params.paceId] = req.body.currentPace;
-    if (userinput == 1){
-      currentPace = currentPace1
-      //gameStats.milesTraveled += 20
-    }
-    else if (userinput == 2){
-      currentPace = currentPace2
-      //gameStats.milesTraveled += 30
-    }
-    else if (userinput == 3){
-      currentPace = currentPace3
-      //gameStats.milesTraveled += 35
-    }
-    else if (userinput == 4){
-      currentPace = currentPace4
-    }
-    res.setHeader('Content-Type', 'text/plain');
-    res.send(currentPace);
-  }
+
+
+
+  // exports.changePace = function(req,res){
+  //   gameData.gameStats.currentPace[req.params.paceId] = req.body.currentPace;
+  //   if (userinput == 1){
+  //     currentPace = currentPace1
+  //     //gameStats.milesTraveled += 20
+  //   }
+  //   else if (userinput == 2){
+  //     currentPace = currentPace2
+  //     //gameStats.milesTraveled += 30
+  //   }
+  //   else if (userinput == 3){
+  //     currentPace = currentPace3
+  //     //gameStats.milesTraveled += 35
+  //   }
+  //   else if (userinput == 4){
+  //     currentPace = currentPace4
+  //   }
+  //   res.setHeader('Content-Type', 'text/plain');
+  //   res.send(currentPace);
+  // }
 
 
 
@@ -169,11 +165,11 @@ exports.getCurrentWeathers = function(req, res) {
 // TERRAIN
 
 var currentTerrain = []; // the array that contains top ten scores at that time
-currentTerrain1 = terrain.terrainOptions("Mountains", "mountain.gif", -5);
-currentTerrain2 = terrain.terrainOptions("Grassland", "field.gif", +5);
-currentTerrain3 = terrain.terrainOptions("Plains", "greatplains.jpg", +5);
+currentTerrain1 = terrain.terrainOptions("Mountains", "/images/mountain.gif", -5);
+currentTerrain2 = terrain.terrainOptions("Grassland", "/images/field.gif", +5);
+currentTerrain3 = terrain.terrainOptions("Plains", "/images/greatplains.jpg", +5);
 currentTerrain4 = terrain.terrainOptions("Forrest", "", 0);
-currentTerrain5 = terrain.terrainOptions("Mountains", "mountain.gif", -5);
+currentTerrain5 = terrain.terrainOptions("Mountains", "/images/mountain.gif", -5);
 
 currentTerrain.push(currentTerrain1);
 currentTerrain.push(currentTerrain2);
@@ -221,19 +217,19 @@ exports.getCurrentTerrains = function(req, res) {
 
 // change pace, weather, terrain, health,
 
-exports.updateGame = function(req, res) {
-
-  updateHealth();
-  gameStats.milesTraveled += updateMiles();
-  gameStats.daysOnTrail++;
-  gameStats.playerProfession = pickProfession();
-  gameStats.currentWeather = weightedWeather();
-  gameStats.currentTerrain = weightedTerrains();
-  gameStats.startMonth =
-  res.setHeader('Content-Type', 'application/json');
-  res.send(gameStats)
-
-}
+// exports.updateGame = function(req, res) {
+//
+//   updateHealth();
+//   gameStats.milesTraveled += updateMiles();
+//   gameStats.daysOnTrail++;
+//   //gameStats.playerProfession = pickProfession();
+//   gameStats.currentWeather = weightedWeather();
+//   gameStats.currentTerrain = weightedTerrains();
+//   //gameStats.startMonth =
+//   res.setHeader('Content-Type', 'application/json');
+//   res.send(gameStats)
+//
+// }
 
 exports.getGameData = function(req, res) {
     //console.log(gameData)
@@ -248,63 +244,59 @@ exports.getData = function (){
 
 exports.updateGameData = function(req, res) {
     //console.log(gameStats)
-    res.setHeader('Content-Type', 'application/json');
-    res.send(gameStats);
 
-    var prob1 = 0.03;
-    var prob2 = 0.10;
-    if(gameStats.groupHealth >=80) {
 
-    }
-    else if(gameStats.groupHealth >=50 && gameStats.groupHealth <80){
 
-    }
-    else if(gameStats.groupHealth >=20 && gameStats.groupHealth <50){
-      for (var i = 0; i < gameStats.playerStatus.length; i++) {
-        if(gameStats.playerStatus[i] == true){
-          var random = Math.floor(Math.random() * 100 + 1) / 100
-          if (random == 1){
-            random = .99;
-            random = random - prob1;
-          }
-          if (random <= 0) {
-            gameStats.playerStatus[i] = false;
-            message.push(gameStats.playerNames[i] + "has died")
-          }
-
-        }
-      }
-
-    }
-
-    else if (gameStats.groupHealth >0 && gameStats.groupHealth < 20){
+    if(gameStats.groupHealth >= 20 && gameStats.groupHealth <50) {
       for (var i = 0; i < gameStats.playerStatus.length; i++){
-        if (gameStats.playerStatus[i] == true){
-          var random = Math.floor(Math.random() * 100 + 1) / 100
-          if (random == 1){
-            random = .99;}
-            random = random - prob2;
-          if (random <= 0) {
-            gameStats.playerStatus[i] = false;
-            message.push(gameStats.playerNames[i] + "has died")
+        var random = Math.floor(Math.random() * 100 + 1);
+        if (random <= 3){
+          gameStats.playerStatus[i] = false;
+          gameStats.messages.push(gameStats.playerNames[i] + "has died")
+        }
+      }
+
+    }
+    else if(gameStats.groupHealth >= 0 && gameStats.groupHealth < 20){
+      for (var i = 0; i < gameStats.playerStatus.length; i++){
+        var random = Math.floor(Math.random() * 100 + 1);
+        if (random <= 10){
+          gameStats.playerStatus[i] = false;
+          gameStats.messages.push(gameStats.playerNames[i] + "has died")
+    }
+    else if(gameStats.groupHealth <= 0){
+      for (var i = 0; i < gameStats.playerStatus.length; i++) {
+        gameStats.playerStatus[i] = false;
           }
+          gameStats.messages.push("all players have died")
         }
       }
     }
+    updateHealth();
+    gameStats.milesTraveled += updateMiles();
+    gameStats.daysOnTrail++;
+    //gameStats.playerProfession = pickProfession();
+    gameStats.currentWeather = weightedWeather();
+    gameStats.currentTerrain = weightedTerrains();
+    //gameStats.startMonth =
+    res.setHeader('Content-Type', 'application/json');
+    res.send(gameStats)
   }
 
-  var pickMonth = [];
-  month1 = pickMonth.push("April");
-  month2 = pickMonth.push("May");
-  month3 = pickMonth.push("June");
-  month4 = pickMonth.push("July");
-  month5 = pickMonth.push("August");
 
-    function randomMonth () {
-      var anyMonth = Math.floor(Math.random() * pickMonth.length);
-      var activeMonth = pickMonth[anyMonth];
-      return activeMonth;
-    }
+
+  // var pickMonth = [];
+  // month1 = pickMonth.push("April");
+  // month2 = pickMonth.push("May");
+  // month3 = pickMonth.push("June");
+  // month4 = pickMonth.push("July");
+  // month5 = pickMonth.push("August");
+  //
+  //   function randomMonth () {
+  //     var anyMonth = Math.floor(Math.random() * pickMonth.length);
+  //     var activeMonth = pickMonth[anyMonth];
+  //     return activeMonth;
+  //   }
 
 
 
@@ -344,46 +336,86 @@ function updateHealth (){
   else if (gameStats.currentWeather == currentWeather11){
     gameStats.groupHealth -= 3 }
 
+    // if (gameStats.currentPace == currentPace[1]){
+    //   gameStats.groupHealth -= 3 }
+    // else if (gameStats.currentPace == currentPace[2]){
+    //   gameStats.groupHealth -= 8 }
+    // else if (gameStats.currentPace == currentPace[3]){
+    //   gameStats.groupHealth += 5 }
+
+    gameStats.groupHealth += gameStats.currentPace.paceHealth;
+
+
 }
 // pace health effect
 
-  if (gameStats.currentPace == currentPace2){
-    gameStats.groupHealth -= 3 }
-  else if (gameStats.currentPace == currentPace3){
-    gameStats.groupHealth -= 8 }
-  else if (gameStats.currentPace == currentPace4){
-    gameStats.groupHealth += 5 }
+
+
+
+
+    // gameStats.groupHealth += gameStats.currentWeather.weatherHealth;
 
 
 
 
 
-
-
-
-function pickProfession(){
-
-      if (gameStats.playerProfession = "Banker"){
+exports.pickProfession = function(req, res){
+  gameStats.playerProfession = req.params.profession;
+      if (gameStats.playerProfession == "Banker"){
         gameStats.playerMoney = 2000;
       }
-      else if (gameStats.playerProfession = "Farmer"){
+      else if (gameStats.playerProfession == "Carpenter"){
         gameStats.playerMoney = 1800;
       }
-      else if (gameStats.playerProfession = "Carpenter"){
+      else if (gameStats.playerProfession == "Farmer"){
         gameStats.playerMoney = 1500;
       }
+      res.setHeader('Content-Type', 'text/plain');
+      res.send(gameStats.playerProfession);
     }
 
-    var chooseProfession = [];
-    chooseProfession.push("Banker")
-    chooseProfession.push("Farmer")
-    chooseProfession.push("Carpenter")
 
-    function randomProfession() {
-      var randomNum = Math.floor(Math.random() * chooseProfession.length);
-      var currentProfession = chooseProfession[randomNum];
-      return currentProfession;
-    }
+exports.setMembers = function(req, res){
+    gameStats.playerNames[1] = req.params.name2;
+    gameStats.playerNames[2] = req.params.name3;
+    gameStats.playerNames[3] = req.params.name4;
+    gameStats.playerNames[4] = req.params.name5;
+    res.setHeader('Content-Type', 'text/plain');
+    res.send(gameStats.playerNames);
+  }
+
+
+exports.setLeader = function(req, res){
+    gameStats.playerNames[0] = req.params.name1;
+    res.setHeader('Content-Type', 'text/plain');
+    res.send(gameStats.playerNames);
+  }
+
+exports.setMonth = function (req,res) {
+  gameStats.startMonth = req.params.startMonth;
+  res.setHeader('Content-Type', 'text/plain');
+  res.send(gameStats.startMonth);
+}
+
+exports.setPace = function (req, res) {
+  var allPaces = pace.paceOptions();
+  gameStats.currentPace = allPaces[req.params.paceid];
+  res.setHeader('Content-Type', 'text/plain');
+  res.send(gameStats.currentPace);
+}
+
+
+
+    // var chooseProfession = [];
+    // chooseProfession.push("Banker")
+    // chooseProfession.push("Farmer")
+    // chooseProfession.push("Carpenter")
+    //
+    // function randomProfession() {
+    //   var randomNum = Math.floor(Math.random() * chooseProfession.length);
+    //   var currentProfession = chooseProfession[randomNum];
+    //   return currentProfession;
+    // }
 
 
 
@@ -443,10 +475,16 @@ function pickProfession(){
   //       gameStats.milesTraveled += pace.paceMileage * .5 }
 
 
+
     function updateMiles (){
       console.log(gameStats.currentPace.paceMileage);
         gameStats.milesTraveled += (gameStats.currentPace.paceMileage + gameStats.currentTerrain.terrainMilesEffect) * gameStats.currentWeather.weatherMiles ;
     }
+
+//MileChange
+getMileChange = function() {
+  return gameStats.currentPace.miles + currentGameData.currentWeather.weatherMiles
+}
 
 
 
@@ -454,12 +492,12 @@ var setup = require ('../controllers/setupController');
 
 
 exports.resetGame = function(req, res) {
-  gameStats = setup.createGameObject();
-  gameStats.startMonth = randomMonth();
+  gameStats = gameData.gameInfo();
+  // gameStats.startMonth = setMonth();
   gameStats.currentWeather = weightedWeather();
   gameStats.currentTerrain = weightedTerrains();
-  gameStats.currentPace = defaultPace();
-  gameStats.playerProfession = randomProfession();
+  gameStats.currentPace = changePace(0);
+  // gameStats.playerProfession = setProfession();
   res.setHeader('Content-Type', 'application/json');
   res.send(gameStats);
 

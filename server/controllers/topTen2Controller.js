@@ -1,15 +1,36 @@
 var topTen2 = require('../models/topTen2');
 
-var currentTopScores = []; // the array that contains top ten scores at that time
-currentTopScores1 = topTen2.addScore("Ethan", 5, "03/01/2019");
-currentTopScores2 =topTen2.addScore("Devin", 10, "03/01/2019");
-currentTopScores3 =topTen2.addScore("Andrew", 20, "03/01/2019");
-currentTopScores4 =topTen2.addScore("Justin", 30, "03/01/2019");
+// var currentTopScores = []; // the array that contains top ten scores at that time
+// currentTopScores1 = topTen2.addScore("Ethan", 5, "03/01/2019");
+// currentTopScores2 =topTen2.addScore("Devin", 10, "03/01/2019");
+// currentTopScores3 =topTen2.addScore("Andrew", 20, "03/01/2019");
+// currentTopScores4 =topTen2.addScore("Justin", 30, "03/01/2019");
+//
+// currentTopScores.push(currentTopScores1);
+// currentTopScores.push(currentTopScores2);
+// currentTopScores.push(currentTopScores3);
+// currentTopScores.push(currentTopScores4);
 
-currentTopScores.push(currentTopScores1);
-currentTopScores.push(currentTopScores2);
-currentTopScores.push(currentTopScores3);
-currentTopScores.push(currentTopScores4);
+
+//MYSQL 
+
+
+// var mysql = require('mysql');
+//
+// var con = mysql.createConnection({
+//   host: "localhost",
+//   user: "root",
+//   password: ""
+// });
+//
+// con.connect(function(err) {
+//   if (err) throw err;
+//   console.log("MySQL DB connected");
+//   var sql = "use otTopTen;";
+//   con.query(sql, function (err, result){
+//     if (err) throw err;
+//   });
+// })
 
 // didnt have any of this^^ but going off of the github example
 

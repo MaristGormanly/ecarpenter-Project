@@ -4,15 +4,15 @@ function gameData(currentPace, currentWeather, currentTerrain, messages) {
   var weather = require('../models/weather');
   var terrain = require('../models/terrain');
 
-  this.playerNames = [];
-  this.playerStatus = [true,true]
+  this.playerNames = ["", "", "", "", ""];
+  this.playerStatus = [true, true, true, true, true]
   this.playerProfession = "";
   this.playerMoney = 0;
-  this.startMonth = "";
+  this.startMonth = '';
   this.milesTraveled = 0;
   this.groupHealth = 100;
   this.daysOnTrail = 0;
-  this.messages = "";
+  this.messages = [];
   this.currentPace = {};
   this.currentWeather = {};
   this.currentTerrain = {};
